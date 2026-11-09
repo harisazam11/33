@@ -1,0 +1,101 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: var(--font-pt-sans), sans-serif;
+}
+
+@layer base {
+  :root {
+    --background: 206 100% 97%; /* #F0F8FF AliceBlue */
+    --foreground: 210 25% 25%; /* Dark grayish blue for text */
+    --card: 206 100% 99%; /* Slightly off-white from background */
+    --card-foreground: 210 25% 25%;
+    --popover: 206 100% 99%;
+    --popover-foreground: 210 25% 25%;
+    --primary: 197 71% 73%; /* #87CEEB SkyBlue */
+    --primary-foreground: 197 50% 20%; /* Dark text for contrast on SkyBlue */
+    --secondary: 206 60% 90%; /* Lighter version of SteelBlue */
+    --secondary-foreground: 210 25% 30%;
+    --muted: 206 50% 93%;
+    --muted-foreground: 206 20% 55%;
+    --accent: 207 44% 49%; /* #4682B4 SteelBlue */
+    --accent-foreground: 207 100% 95%; /* Light text for contrast on SteelBlue */
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 206 30% 85%;
+    --input: 206 30% 90%;
+    --ring: 197 71% 73%; /* SkyBlue for focus rings */
+    --radius: 0.5rem;
+
+    /* Sidebar specific theme variables */
+    --sidebar-background: 200 50% 95%; /* Very light blue */
+    --sidebar-foreground: 207 40% 30%; /* Dark blue gray */
+    --sidebar-primary: 197 71% 65%; /* Slightly darker SkyBlue for active/hover */
+    --sidebar-primary-foreground: 197 50% 15%; /* Darker text for sidebar primary */
+    --sidebar-accent: 207 44% 55%; /* Slightly lighter SteelBlue for sidebar accent */
+    --sidebar-accent-foreground: 207 100% 97%; /* Light text for sidebar accent */
+    --sidebar-border: 200 30% 88%;
+    --sidebar-ring: 197 71% 73%;
+  }
+
+  .dark {
+    /* Keeping dark mode fairly standard but complementing the new theme */
+    --background: 210 20% 10%;
+    --foreground: 210 40% 90%;
+    --card: 210 20% 12%;
+    --card-foreground: 210 40% 90%;
+    --popover: 210 20% 12%;
+    --popover-foreground: 210 40% 90%;
+    --primary: 197 71% 60%; /* Darker SkyBlue */
+    --primary-foreground: 197 30% 95%;
+    --secondary: 206 40% 30%;
+    --secondary-foreground: 210 40% 90%;
+    --muted: 206 30% 25%;
+    --muted-foreground: 206 30% 70%;
+    --accent: 207 44% 55%; /* Darker SteelBlue */
+    --accent-foreground: 207 100% 95%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 206 20% 20%;
+    --input: 206 20% 22%;
+    --ring: 197 71% 60%;
+
+    --sidebar-background: 210 20% 15%;
+    --sidebar-foreground: 210 30% 85%;
+    --sidebar-primary: 197 71% 55%;
+    --sidebar-primary-foreground: 197 20% 92%;
+    --sidebar-accent: 207 44% 50%;
+    --sidebar-accent-foreground: 207 90% 94%;
+    --sidebar-border: 210 20% 25%;
+    --sidebar-ring: 197 71% 55%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-headline;
+  }
+}
+
+/* Hide number input spinners */
+@layer utilities {
+  /* Hide spinner buttons in WebKit-based browsers (Chrome, Safari, Edge) */
+  input[type="number"]::-webkit-outer-spin-button,
+  input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  /* Hide spinner buttons in Firefox */
+  input[type="number"] {
+    -moz-appearance: textfield;
+  }
+}

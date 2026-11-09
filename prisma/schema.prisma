@@ -1,0 +1,119 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+
+model User {
+  id           String    @id @default(cuid())
+  name         String?
+  badgeNumber  String    @unique
+  email        String?   @unique
+  password     String?
+  role         UserRole
+  status       UserStatus
+  lastLogin    DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  challans     Challan[]
+}
+
+model Challan {
+  id                                String   @id @default(cuid())
+  date                              DateTime @default(now())
+  plateNumber                       String
+  vehicleType                       String
+  violationType                     String
+  violationLocation                 String
+  status                            ChallanStatus
+  fineAmount                        Float
+  notes                             String?
+  capturedTimestamp                 String?
+  capturedGeoLocation               String?
+
+  isFlaggedForReview                Boolean  @default(false)
+  originalFineAmount                Float?
+  fineAmountEditedByAdmin           Boolean  @default(false)
+  reviewNotes                       String? // Admin's review notes
+  
+  officerSuggestedFineAmount        Float?
+  officerReviewNotes                String?
+  officerSuggestedViolationType     String?
+  officerSuggestedVehicleType       String?
+  officerSuggestedViolationLocation String?
+
+  issuedBy           User     @relation(fields: [issuedByOfficerId], references: [id])
+  issuedByOfficerId  String
+  
+  vehicle            Vehicle? @relation(fields: [vehicleId], references: [id])
+  vehicleId          String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Vehicle {
+  id               String    @id @default(cuid())
+  plateNumber      String    @unique
+  ownerName        String
+  model            String
+  color            String
+  registrationDate DateTime
+  taxStatus        VehicleTaxStatus
+  customsStatus    CustomsStatus
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+  challans         Challan[]
+}
+
+model RestrictedArea {
+  id                  String   @id @default(cuid())
+  name                String
+  locationDescription String
+  restrictionType     String
+  status              RestrictedAreaStatus
+  notes               String?
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+}
+
+enum UserRole {
+  ADMIN
+  OFFICER
+}
+
+enum UserStatus {
+  Active
+  Inactive
+  Suspended
+}
+
+enum ChallanStatus {
+  Paid
+  Unpaid
+  Contested
+}
+
+enum VehicleTaxStatus {
+  Paid
+  Due
+  NA
+}
+
+enum CustomsStatus {
+  Cleared
+  Pending
+  NA
+}
+
+enum RestrictedAreaStatus {
+  Active
+  Inactive
+}
